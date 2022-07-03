@@ -153,7 +153,7 @@ class AdCreateView(CreateView):
         ad_data = json.loads(request.body)
 
         author = get_object_or_404(User, ad_data["author_id"])
-        # category = get_object_or_404(Category, ad_data["category_id"])
+        category = get_object_or_404(Category, ad_data["category_id"])
 
         ad = Ad.objects.create(
             name=ad_data["name"],
@@ -161,16 +161,8 @@ class AdCreateView(CreateView):
             price=ad_data["price"],
             description=ad_data["description"],
             is_published=ad_data["is_published"],
-            # category=category,
+            category=category,
         )
-
-        for category_name in ad_data["category"]:
-            category, _ = Category.objects.get_or_create(
-                name=category_name
-            )
-            ad.category.add(category)
-
-        ad.save()
 
         return JsonResponse({
             "id": ad.id,
