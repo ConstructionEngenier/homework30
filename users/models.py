@@ -16,9 +16,9 @@ class Location(models.Model):
 
 class User(models.Model):
     ROLES = [
-        ("member", ""),
-        ("moderator", ""),
-        ("admin", ""),
+        ("member", "Пользователь"),
+        ("moderator", "Модератор"),
+        ("admin", "Администратор"),
     ]
 
     first_name = models.CharField(max_length=20)
