@@ -22,8 +22,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
     locations = serializers.SlugRelatedField(
-        required=True,
+        required=False,
         queryset=Location.objects.all(),
         many=True,
         slug_field="name"
@@ -40,6 +41,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             loc_obj, _ = Location.objects.get_or_create(name=location)
             user.locations.add(loc_obj)
 
+        user.save()
         return user
 
     class Meta:
@@ -49,6 +51,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     locations = serializers.SlugRelatedField(
+        required=False,
         queryset=Location.objects.all(),
         many=True,
         slug_field="name"
@@ -63,7 +66,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 
         for location in self._locations:
             loc_obj, _ = Location.objects.get_or_create(name=location)
-            user.location.add(loc_obj)
+            user.locations.add(loc_obj)
 
         user.save()
         return user
