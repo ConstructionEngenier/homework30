@@ -12,7 +12,7 @@ class AddAdsData(View):
                                    sep=',').to_dict()
 
         i = 0
-        while max(data_ads['Id'].keys()) > i:
+        while max(data_ads['Id'].values()) > i:
             ad = Ad.objects.create(
                 name=data_ads["name"][i],
                 author_id=data_ads["author_id"][i],
@@ -32,7 +32,7 @@ class AddCatData(View):
                                    sep=',').to_dict()
 
         i = 0
-        while max(data_cat['id'].keys()) > i:
+        while max(data_cat['id'].values()) > i:
             cat = Category.objects.create(
                 name=data_cat["name"][i],
             )
@@ -46,7 +46,7 @@ class AddLocData(View):
                                    sep=',').to_dict()
 
         i = 0
-        while max(data_loc['id'].keys()) > i:
+        while max(data_loc['id'].values()) > i:
             loc = Location.objects.create(
                 name=data_loc["name"][i],
                 lat=data_loc["lat"][i],
@@ -60,9 +60,8 @@ class AddUserData(View):
     def get(self, request):
         data_user = pandas.read_csv('/Users/artem/Artems documents/Python/lesson28/homework28/data/user.csv',
                                     sep=',').to_dict()
-
         i = 0
-        while max(data_user['id'].keys()) > i:
+        while max(data_user['id'].values()) > i:
             user = User.objects.create(
                 first_name=data_user["first_name"][i],
                 last_name=data_user["last_name"][i],
